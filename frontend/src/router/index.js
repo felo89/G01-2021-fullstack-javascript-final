@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Products from '../views/Products.vue'
+import { firebaseApp } from '@/firebase'
 
 Vue.use(VueRouter)
 
@@ -14,13 +15,27 @@ const routes = [
   {
     path: '/productos',
     name: 'Products',
-    component: Products
+    component: Products,
+    meta: {
+      login: true
+    }
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const user = firebaseApp.auth().currentUser
+  const authRequired = to.matched.some(route => route.meta.login)
+
+  if (!user && authRequired) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

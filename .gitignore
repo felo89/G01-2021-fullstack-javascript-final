@@ -6,6 +6,7 @@ node_modules
 /tests/e2e/screenshots/
 
 firebase-service-account.json
+local.database.sqlite3
 
 # local env files
 .env.local
