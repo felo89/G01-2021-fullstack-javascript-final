@@ -7,6 +7,8 @@ node_modules
 
 firebase-service-account.json
 local.database.sqlite3
+test.database.sqlite3
+coverage
 
 # local env files
 .env.local
