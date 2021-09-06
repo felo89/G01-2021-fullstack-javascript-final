@@ -56,7 +56,7 @@ describe('Login.vue', () => {
     expect(firebaseApp.auth().signInWithEmailAndPassword).not.toHaveBeenCalled()
   })
 
-  it('Shows the global alert when authentication fails ', async () => {
+  it('Shows the global alert when authentication fails', async () => {
     const wrapper = mount(App, {
       localVue,
       vuetify,

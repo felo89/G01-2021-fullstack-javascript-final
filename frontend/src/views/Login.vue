@@ -1,8 +1,5 @@
 <template>
   <v-main class="home">
-    <div role="alert">
-      Error al hacer autenticación
-    </div>
     <v-card width="400px" class="mx-auto my-auto">
       <v-card-title class="pb-0">
         <h1 class="mx-auto mb-5">Ingreso</h1>

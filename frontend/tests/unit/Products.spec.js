@@ -6,7 +6,6 @@ import Vuetify from 'vuetify'
 import App from '@/App.vue'
 import store from '@/store'
 import router from '@/router'
-import { firebaseApp } from '@/firebase'
 import products from '../../../fixtures/products.json'
 
 jest.mock('axios', () => ({
@@ -57,7 +56,7 @@ describe('Product.vue', () => {
   })
 
   it('Shows an empty list of products when the server response failed', async () => {
-    const wrapper = mount(App, {
+    const wrapper = mount(App,{
       localVue,
       vuetify,
       store,
@@ -65,35 +64,13 @@ describe('Product.vue', () => {
     })
     const errorMessage = 'Database Error in Server'
     axios.get.mockRejectedValue(new Error(errorMessage))
-
+    
     router.push({ name: 'Products' })
     await flushPromises()
-
+  
+    const expectedMessage = 'Productos momentáneamente no disponibles'
     expect(wrapper.findAll('[data-cy=product-item]')).toHaveLength(0)
     expect(store.state.products).toEqual([])
-  })
-
-  it('Shows the global alert when authentication fails ', async () => {
-    const wrapper = mount(App, {
-      localVue,
-      vuetify,
-      store,
-      router
-    })
-    const errorMessage = 'Invalid user'
-    firebaseApp.auth().signInWithEmailAndPassword.mockRejectedValue(new Error(errorMessage))
-    wrapper.find('[data-cy=username]').setValue('sebastian@boolean.cl')
-    wrapper.find('[data-cy=password]').setValue('academiaboolean')
-
-    wrapper.find('[data-cy=login-btn]').trigger('click')
-    await flushPromises()
-
-    const expectedMessage = 'Error al hacer autenticación'
     expect(wrapper.find('[role=alert]').text()).toEqual(expectedMessage)
-
-    expect(store.state.alert).toEqual({
-      message: expectedMessage,
-      type: 'error'
-    })
   })
 })
