@@ -56,7 +56,7 @@ describe('Product.vue', () => {
   })
 
   it('Shows an empty list of products when the server response failed', async () => {
-    const wrapper = mount(App,{
+    const wrapper = mount(App, {
       localVue,
       vuetify,
       store,
@@ -64,10 +64,10 @@ describe('Product.vue', () => {
     })
     const errorMessage = 'Database Error in Server'
     axios.get.mockRejectedValue(new Error(errorMessage))
-    
+
     router.push({ name: 'Products' })
     await flushPromises()
-  
+
     const expectedMessage = 'Productos momentáneamente no disponibles'
     expect(wrapper.findAll('[data-cy=product-item]')).toHaveLength(0)
     expect(store.state.products).toEqual([])
