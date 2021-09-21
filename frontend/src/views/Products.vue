@@ -21,7 +21,7 @@
               height="200px"
             >
             </v-img>
-            <v-card-title></v-card-title>
+            <v-card-title data-cy="product-name">{{ product.name }}</v-card-title>
             <v-card-text></v-card-text>
           </v-card>
         </v-col>

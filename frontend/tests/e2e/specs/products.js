@@ -5,6 +5,11 @@ describe('products test suite', () => {
     cy.fixture('products.json')
       .then((products) => {
         cy.get('[data-cy="product-item"]').should('have.length', products.length)
+        cy.get('[data-cy="product-name"]').each(($el, index) => {
+          console.log($el.text())
+          console.log(products[index].name)
+          expect($el.text()).to.equal(products[index].name)
+        })
       })
   })
 })
