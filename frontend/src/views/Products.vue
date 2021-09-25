@@ -23,6 +23,13 @@
             </v-img>
             <v-card-title data-cy="product-name">{{ product.name }}</v-card-title>
             <v-card-text></v-card-text>
+            <div class="d-flex">
+              <div class="ml-auto">
+                <v-chip color="primary">
+                  $10.000
+                </v-chip>
+              </div>
+            </div>
           </v-card>
         </v-col>
     </v-row>
