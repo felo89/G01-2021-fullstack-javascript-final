@@ -21,8 +21,19 @@
               height="200px"
             >
             </v-img>
-            <v-card-title></v-card-title>
+            <v-card-title data-cy="product-name">{{ product.name }}</v-card-title>
             <v-card-text></v-card-text>
+            <div class="d-flex">
+              <div class="ml-auto">
+                <v-chip color="primary" data-cy="product-price">
+                  {{
+                    product.price === 0 ?
+                      "No Disponible" :
+                      new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.price)
+                  }}
+                </v-chip>
+              </div>
+            </div>
           </v-card>
         </v-col>
     </v-row>
@@ -49,3 +60,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.v-chip {
+  margin: 10px;
+}
+</style>
