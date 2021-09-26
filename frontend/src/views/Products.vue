@@ -26,7 +26,7 @@
             <div class="d-flex">
               <div class="ml-auto">
                 <v-chip color="primary">
-                  $10.000
+                  {{ new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.price) }}
                 </v-chip>
               </div>
             </div>
