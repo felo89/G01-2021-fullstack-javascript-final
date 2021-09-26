@@ -26,7 +26,11 @@
             <div class="d-flex">
               <div class="ml-auto">
                 <v-chip color="primary">
-                  {{ new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.price) }}
+                  {{
+                    product.price === 0 ?
+                      "No Disponible" :
+                      new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.price)
+                  }}
                 </v-chip>
               </div>
             </div>
@@ -56,3 +60,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.v-chip {
+  margin: 10px;
+}
+</style>
