@@ -25,7 +25,7 @@
             <v-card-text></v-card-text>
             <div class="d-flex">
               <div class="ml-auto">
-                <v-chip color="primary">
+                <v-chip color="primary" data-cy="product-price">
                   {{
                     product.price === 0 ?
                       "No Disponible" :
