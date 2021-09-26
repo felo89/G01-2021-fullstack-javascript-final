@@ -17,7 +17,7 @@ describe('products test suite', () => {
 
             expect($el.text().trim()).to.equal(price.toString())
           } else {
-            expect($el.text().trim()).to.equal("No Disponible")
+            expect($el.text().trim()).to.equal('No Disponible')
           }
         })
       })

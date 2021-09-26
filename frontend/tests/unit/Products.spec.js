@@ -73,4 +73,23 @@ describe('Product.vue', () => {
     expect(store.state.products).toEqual([])
     expect(wrapper.find('[role=alert]').text()).toEqual(expectedMessage)
   })
+
+  it('Shows special message when price is zero', async () => {
+    const wrapper = mount(App, {
+      localVue,
+      vuetify,
+      store,
+      router
+    })
+    const unavailableMessage = "No Disponible"
+    const productUnavailable = products.filter(product => product.price === 0)
+    axios.get.mockResolvedValue({ data: productUnavailable })
+
+    router.push({ name: 'Products' })
+    await flushPromises()
+
+    expect(wrapper.findAll('[data-cy=product-price]')).toHaveLength(productUnavailable.length)
+    expect(store.state.products).toEqual(productUnavailable)
+    expect(wrapper.find('[data-cy=product-price]').text()).toEqual(unavailableMessage)
+  })
 })
