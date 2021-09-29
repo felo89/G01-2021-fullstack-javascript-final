@@ -81,15 +81,15 @@ describe('Product.vue', () => {
       store,
       router
     })
-    const unavailableMessage = "No Disponible"
+    const unavailableMessage = 'No Disponible'
     const productUnavailable = products.filter(product => product.price === 0)
     axios.get.mockResolvedValue({ data: productUnavailable })
 
     router.push({ name: 'Products' })
     await flushPromises()
 
-    expect(wrapper.findAll('[data-cy=product-price]')).toHaveLength(productUnavailable.length)
+    expect(wrapper.findAll('[data-cy=price]')).toHaveLength(productUnavailable.length)
     expect(store.state.products).toEqual(productUnavailable)
-    expect(wrapper.find('[data-cy=product-price]').text()).toEqual(unavailableMessage)
+    expect(wrapper.find('[data-cy=price]').text()).toEqual(unavailableMessage)
   })
 })

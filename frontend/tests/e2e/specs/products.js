@@ -8,7 +8,7 @@ describe('products test suite', () => {
         cy.get('[data-cy="product-name"]').each(($el, index) => {
           expect($el.text()).to.equal(products[index].name)
         })
-        cy.get('[data-cy="product-price"]').each(($el, index) => {
+        cy.get('[data-cy="price"]').each(($el, index) => {
           if (products[index].price !== 0) {
             const price = new Intl.NumberFormat(
               'es-CL',
