@@ -18,7 +18,11 @@ jest.mock('@/firebase', () => ({
       currentUser: {
         name: 'dummyUser',
         getIdToken: () => 'fakeToken'
-      }
+      },
+      onAuthStateChanged: jest.fn().mockImplementation((callback) => {
+        const user = { name: 'Matias' }
+        callback(user)
+      })
     })
   }
 }))
@@ -32,8 +36,7 @@ describe('Product.vue', () => {
     vuetify = new Vuetify()
 
     store.replaceState({
-      products: [],
-      alert: null
+      products: []
     })
     axios.get.mockReset()
     router.push('/')
@@ -68,28 +71,7 @@ describe('Product.vue', () => {
     router.push({ name: 'Products' })
     await flushPromises()
 
-    const expectedMessage = 'Productos momentáneamente no disponibles'
     expect(wrapper.findAll('[data-cy=product-item]')).toHaveLength(0)
     expect(store.state.products).toEqual([])
-    expect(wrapper.find('[role=alert]').text()).toEqual(expectedMessage)
-  })
-
-  it('Shows special message when price is zero', async () => {
-    const wrapper = mount(App, {
-      localVue,
-      vuetify,
-      store,
-      router
-    })
-    const unavailableMessage = 'No Disponible'
-    const productUnavailable = products.filter(product => product.price === 0)
-    axios.get.mockResolvedValue({ data: productUnavailable })
-
-    router.push({ name: 'Products' })
-    await flushPromises()
-
-    expect(wrapper.findAll('[data-cy=price]')).toHaveLength(productUnavailable.length)
-    expect(store.state.products).toEqual(productUnavailable)
-    expect(wrapper.find('[data-cy=price]').text()).toEqual(unavailableMessage)
   })
 })

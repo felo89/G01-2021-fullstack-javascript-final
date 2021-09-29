@@ -9,8 +9,13 @@ import { firebaseApp } from '@/firebase'
 
 jest.mock('@/firebase', () => ({
   firebaseApp: {
+    signInWithEmailAndPassword: jest.fn(),
     auth: jest.fn().mockReturnValue({
-      signInWithEmailAndPassword: jest.fn()
+      signInWithEmailAndPassword: jest.fn(),
+      onAuthStateChanged: jest.fn().mockImplementation((callback) => {
+        const user = { name: 'Matias' }
+        callback(user)
+      })
     })
   }
 }))
@@ -21,6 +26,11 @@ describe('Login.vue', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     vuetify = new Vuetify()
+
+    store.replaceState({
+      products: [],
+      alert: null
+    })
 
     firebaseApp.auth().signInWithEmailAndPassword.mockReset()
     router.push('/')
@@ -35,7 +45,6 @@ describe('Login.vue', () => {
       router
     })
     wrapper.vm.$router.push = jest.fn()
-
     wrapper.find('[data-cy=username]').setValue('testlogin@boolean.cl')
     wrapper.find('[data-cy=password]').setValue('somepass')
 
@@ -56,7 +65,7 @@ describe('Login.vue', () => {
     expect(firebaseApp.auth().signInWithEmailAndPassword).not.toHaveBeenCalled()
   })
 
-  it('Shows the global alert when authentication fails', async () => {
+  it('Shows the global alert when authentication fails ', async () => {
     const wrapper = mount(App, {
       localVue,
       vuetify,
